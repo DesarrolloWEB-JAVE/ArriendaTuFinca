@@ -1,5 +1,9 @@
 package com.arriendatufinca.arriendatufinca.Repositories;
 
-public class ArriendoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.arriendatufinca.arriendatufinca.Entities.Arriendo;
+
+public interface ArriendoRepository extends JpaRepository<Arriendo, Long> {
 
 }

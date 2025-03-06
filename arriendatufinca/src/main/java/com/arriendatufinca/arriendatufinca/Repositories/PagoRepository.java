@@ -1,5 +1,9 @@
 package com.arriendatufinca.arriendatufinca.Repositories;
 
-public class PagoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.arriendatufinca.arriendatufinca.Entities.Pago;
+
+public interface PagoRepository extends JpaRepository<Pago, Long> {
 
 }
