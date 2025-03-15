@@ -21,8 +21,8 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Where(clause = "status = 'ACTIVE'")
-@SQLDelete(sql = "UPDATE user SET status = 'DELETED' WHERE id=?")
+@Where(clause = "status = 0")
+@SQLDelete(sql = "UPDATE user SET status = 1 WHERE id=?")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

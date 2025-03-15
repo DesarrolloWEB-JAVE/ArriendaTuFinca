@@ -21,8 +21,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Where(clause = "status = 'ACTIVE'")
-@SQLDelete(sql = "UPDATE rating SET status = 'DELETED' WHERE id=?")
+@Where(clause = "status = 0")
+@SQLDelete(sql = "UPDATE rating SET status = 1 WHERE id=?")
 @Table(name = "rating")
 public class Rating {
     @Id

@@ -22,8 +22,8 @@ import com.arriendatufinca.arriendatufinca.Enums.StatusEnum;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Where(clause = "status = 'ACTIVE'")
-@SQLDelete(sql = "UPDATE photo SET status = 'DELETED' WHERE id=?")
+@Where(clause = "status = 0")
+@SQLDelete(sql = "UPDATE photo SET status = 1 WHERE id=?")
 @Table(name = "payments")
 public class Payment {
     @Id

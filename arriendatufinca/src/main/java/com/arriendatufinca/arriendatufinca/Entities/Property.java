@@ -22,8 +22,8 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Where(clause = "status = 'ACTIVE'")
-@SQLDelete(sql = "UPDATE property SET status = 'DELETED' WHERE id=?")
+@Where(clause = "status = 0")
+@SQLDelete(sql = "UPDATE property SET status = 1 WHERE id=?")
 @Table(name = "property")
 public class Property {
     @Id

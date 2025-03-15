@@ -18,8 +18,8 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Where(clause = "status = 'ACTIVE'")
-@SQLDelete(sql = "UPDATE photo SET status = 'DELETED' WHERE id=?")
+@Where(clause = "status = 0")
+@SQLDelete(sql = "UPDATE photo SET status = 0 WHERE id=?")
 @Table(name = "photo")
 public class Photo {
     @Id

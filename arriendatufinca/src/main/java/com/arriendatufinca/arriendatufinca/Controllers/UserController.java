@@ -2,13 +2,16 @@ package com.arriendatufinca.arriendatufinca.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arriendatufinca.arriendatufinca.Repositories.UserRepository;
 import com.arriendatufinca.arriendatufinca.Entities.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @RestController
@@ -30,12 +33,19 @@ public class UserController {
     }
 
     @CrossOrigin
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
 
     @CrossOrigin
-    @GetMapping("/create/{username}/{name}/{lasname}/{email}")
-    
+    @PostMapping("/create")
+    public User create(@RequestParam String username, @RequestParam String name, @RequestParam String lastname, @RequestParam String email) {
+        User user = new User();
+        user.setUsername(username);
+        user.setName(name);
+        user.setLastName(lastname);
+        user.setEmail(email);
+        return userRepository.save(user);
+    }
 }
