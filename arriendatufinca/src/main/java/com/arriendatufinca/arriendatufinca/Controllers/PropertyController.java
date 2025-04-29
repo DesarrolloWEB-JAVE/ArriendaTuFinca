@@ -36,6 +36,12 @@ public class PropertyController {
     return ResponseEntity.ok(results);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PropertyDTO> getPropertyById(@PathVariable Long id) {
+        PropertyDTO property = adminService.getPropertyById(id);
+        return ResponseEntity.ok(property);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<PropertyDTO> createProperty(@RequestBody PropertyDTO propertyDTO) {
         PropertyDTO createdProperty = adminService.createProperty(propertyDTO);

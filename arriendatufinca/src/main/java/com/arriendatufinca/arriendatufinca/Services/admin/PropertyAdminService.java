@@ -94,4 +94,10 @@ public class PropertyAdminService {
     
         return modelMapper.map(updatedProperty, PropertyDTO.class);
     }
+
+    public PropertyDTO getPropertyById(Long id) {
+        Property property = propertyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Property not found"));
+        return modelMapper.map(property, PropertyDTO.class);
+    }
 }
