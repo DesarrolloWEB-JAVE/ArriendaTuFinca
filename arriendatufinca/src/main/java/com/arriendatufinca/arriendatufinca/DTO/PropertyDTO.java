@@ -22,4 +22,5 @@ public class PropertyDTO {
     private String address;
     private double price;
     private PropertyState state;
+    private String imageUrl = "assets/images/house.jpg";
 }
