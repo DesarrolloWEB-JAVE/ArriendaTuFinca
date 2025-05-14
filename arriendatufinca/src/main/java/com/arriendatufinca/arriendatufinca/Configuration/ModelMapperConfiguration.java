@@ -17,31 +17,29 @@ public class ModelMapperConfiguration {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        // ----- Mapeo para RentalRequestDTO -> RentalRequest -----
+        // ----- Mapeo para RentalRequest -----
         modelMapper.typeMap(RentalRequestDTO.class, RentalRequest.class)
                 .addMappings(mapper -> {
-                    // Convertir tenantId (Long) -> User (objeto)
                     mapper.<Long>map(RentalRequestDTO::getTenantId, (dest, v) -> dest.getTenant().setId(v));
-                    // Convertir propertyId (Long) -> Property (objeto)
                     mapper.<Long>map(RentalRequestDTO::getPropertyId, (dest, v) -> dest.getProperty().setId(v));
                 });
 
-        // ----- Mapeo para PropertyDTO -> Property -----
+        // ----- Mapeo para Property -----
         modelMapper.typeMap(PropertyDTO.class, Property.class)
                 .addMappings(mapper -> {
-                    // Convertir landlordId (Long) -> User (objeto)
                     mapper.<Long>map(PropertyDTO::getLandlordId, (dest, v) -> dest.getLandlord().setId(v));
-
-                    // Ignorar campos no presentes en el DTO
                     mapper.skip(Property::setId);
                     mapper.skip(Property::setStatus);
-                    mapper.skip(Property::setState);
                     mapper.skip(Property::setPhotos);
                     mapper.skip(Property::setRentalRequests);
-                    mapper.skip(Property::setTenants);
+                });
+
+        // ----- Mapeo inverso (Property -> PropertyDTO) -----
+        modelMapper.typeMap(Property.class, PropertyDTO.class)
+                .addMappings(mapper -> {
+                    mapper.map(src -> src.getLandlord().getId(), PropertyDTO::setLandlordId);
                 });
 
         return modelMapper;
     }
-
 }

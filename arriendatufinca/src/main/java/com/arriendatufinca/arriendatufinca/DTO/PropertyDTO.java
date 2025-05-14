@@ -17,10 +17,8 @@ public class PropertyDTO {
     private String description;
     private int bathrooms;
     private int bedrooms; 
-    private double area;
     private String city;
-    private String address;
-    private double price;
+    private double pricePerDay;
     private PropertyState state;
     private String imageUrl = "assets/images/house.jpg";
     private int score = 5;

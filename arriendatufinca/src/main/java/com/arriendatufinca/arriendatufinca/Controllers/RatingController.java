@@ -17,18 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class RatingController {
     private final RatingService ratingService;
 
-    @PostMapping("/landlord")
+    @PostMapping("/comment")
     public ResponseEntity<RatingDTO> rateLandlord(@RequestBody RatingDTO ratingDTO) {
-        return ResponseEntity.ok(ratingService.rateLandlord(ratingDTO));
-    }
-
-    @PostMapping("/tenant")
-    public ResponseEntity<RatingDTO> rateTenant(@RequestBody RatingDTO ratingDTO) {
-        return ResponseEntity.ok(ratingService.rateTenant(ratingDTO));
-    }
-
-    @PostMapping("/property")
-    public ResponseEntity<RatingDTO> rateProperty(@RequestBody RatingDTO ratingDTO) {
         return ResponseEntity.ok(ratingService.rateProperty(ratingDTO));
     }
 }

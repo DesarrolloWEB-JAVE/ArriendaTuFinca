@@ -47,4 +47,9 @@ public class UserService {
         userDTO.setId(user.getId());
         return userDTO;
     }
+    public void createUser(UserDTO userDTO) {
+        User user = modelMapper.map(userDTO, User.class);
+        user.setStatus(StatusEnum.ACTIVE);
+        userRepository.save(user);
+    }
 }

@@ -3,7 +3,7 @@ package com.arriendatufinca.arriendatufinca.Entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import com.arriendatufinca.arriendatufinca.Enums.PropertyState;
 import com.arriendatufinca.arriendatufinca.Enums.StatusEnum;
@@ -16,54 +16,56 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter
-@Setter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"landlord", "rentalRequests", "tenants", "photos"})
-@Where(clause = "status = 0")
+@ToString(exclude = {"landlord", "rentalRequests", "photos"})
+@SQLRestriction("status = 0")
 @Table(name = "property")
 public class Property {
+    // Property ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Owner of the property
     @ManyToOne
     @JoinColumn(name = "landlord_id", nullable = false)
-    private User landlord; // Owner of the property
+    private User landlord;
 
+    //Property information
     private String title;
     private String description;
     private int bathrooms;
     private int bedrooms;
     private double area;
+    private String country;
     private String city;
-    private String address;
-    private double price;
+    private double pricePerDay;
+    private List<String> photos;
+
+    // Database state
     private StatusEnum status = StatusEnum.ACTIVE;
 
+    // Property state
     @Enumerated(EnumType.STRING)
-    private PropertyState state; // Enum: ACTIVE, INACTIVE
+    private PropertyState propertyState = PropertyState.AVAILABLE;
 
+    // Rating
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Photo> photos = new ArrayList<>();
+    private List<Rating> ratings = new ArrayList<>();
 
+    //request list
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RentalRequest> rentalRequests = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "rentedProperties")
-    private List<User> tenants = new ArrayList<>();
+    
 }

@@ -42,7 +42,7 @@ public class PropertyAdminService {
     
             property.setLandlord(landlord);
             property.setStatus(StatusEnum.ACTIVE); // Estado por defecto 
-            property.setState(PropertyState.ACTIVE); // Estado por defecto 
+            property.setPropertyState(PropertyState.AVAILABLE); // Estado por defecto 
     
             // Guardar en la base de datos
             System.out.println("Guardando propiedad...");
@@ -89,7 +89,7 @@ public class PropertyAdminService {
         Property property = propertyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Property not found"));
     
-        property.setState(PropertyState.INACTIVE);
+        property.setPropertyState(PropertyState.AVAILABLE);
         Property updatedProperty = propertyRepository.save(property);
     
         return modelMapper.map(updatedProperty, PropertyDTO.class);

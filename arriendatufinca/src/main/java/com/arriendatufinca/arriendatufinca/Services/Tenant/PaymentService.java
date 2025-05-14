@@ -23,7 +23,7 @@ public class PaymentService {
 
     public PaymentDTO processPayment(PaymentDTO paymentDTO) {
         // 1. Obtener la RentalRequest desde la base de datos
-        RentalRequest rentalRequest = rentalRequestRepository.findById(paymentDTO.getRentalRequestId())
+        RentalRequest rentalRequest = rentalRequestRepository.findById(paymentDTO.getTransactionId())
             .orElseThrow(() -> new RuntimeException("Rental request not found"));
 
         // 2. Validar el inquilino (opcional)
@@ -33,7 +33,6 @@ public class PaymentService {
 
         // 3. Mapear PaymentDTO a la entidad Payment
         Payment payment = modelMapper.map(paymentDTO, Payment.class);
-        payment.setRentalRequest(rentalRequest);
         payment.setPaymentDate(LocalDateTime.now());
         payment.setState(PaymentState.COMPLETED); // Estado por defecto
 
