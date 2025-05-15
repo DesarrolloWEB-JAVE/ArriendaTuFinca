@@ -1,9 +1,10 @@
 package com.arriendatufinca.arriendatufinca.Entities;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import com.arriendatufinca.arriendatufinca.Enums.RequestState;
 import com.arriendatufinca.arriendatufinca.Enums.StatusEnum;
@@ -20,18 +21,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
    
 @Entity
-@Getter
-@Setter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Where(clause = "status = 0")
+@SQLRestriction("status = 0")
 @SQLDelete(sql = "UPDATE rental_requests SET status = 1 WHERE id = ?")
 @Table(name = "rental_requests")
 public class RentalRequest {
@@ -46,6 +44,9 @@ public class RentalRequest {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "property_id", nullable = false)
     private Property property;
+
+    private Date startDate;
+    private Date endDate;
 
     @Enumerated(EnumType.STRING)
     private RequestState state = RequestState.PENDING;

@@ -28,11 +28,8 @@ public class PaymentControllerTest {
     public void testProcessPayment_Success() {
         // 1. Configurar datos de prueba
         PaymentDTO inputDTO = new PaymentDTO();
-        inputDTO.setRentalRequestId(1L);
         inputDTO.setAmount(1500.00);
-
         PaymentDTO outputDTO = new PaymentDTO();
-        outputDTO.setRentalRequestId(1L);
         outputDTO.setAmount(1500.00);
         outputDTO.setState(PaymentState.COMPLETED);
         outputDTO.setTransactionId(123456L);
@@ -53,7 +50,6 @@ public class PaymentControllerTest {
     public void testProcessPayment_ServiceThrowsException() {
         // 1. Configurar DTO de entrada
         PaymentDTO inputDTO = new PaymentDTO();
-        inputDTO.setRentalRequestId(1L);
 
         // 2. Simular que el servicio lanza una excepción
         when(paymentService.processPayment(any(PaymentDTO.class)))

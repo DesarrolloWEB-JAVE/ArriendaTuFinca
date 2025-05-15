@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import com.arriendatufinca.arriendatufinca.Enums.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +32,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = {"ownedProperties", "rentedProperties", "rentalRequests"})
-@Where(clause = "status = 0")
+@SQLRestriction("status = 0")
 @SQLDelete(sql = "UPDATE user SET status = 1 WHERE id=?")
 public class User {
     @Id
