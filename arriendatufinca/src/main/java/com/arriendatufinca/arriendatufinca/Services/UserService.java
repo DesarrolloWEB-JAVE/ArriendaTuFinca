@@ -30,6 +30,16 @@ public class UserService {
         return userDTO;
     }
 
+    public UserDTO getByUsername(String username) {
+    Optional<User> userOptional = userRepository.findByUsername(username);
+    UserDTO userDTO = new UserDTO();
+    if (userOptional != null) {
+        userDTO = modelMapper.map(userOptional.get(), UserDTO.class);
+    }
+    return userDTO;
+}
+
+
     public Iterable<UserDTO> getAll() {
         List<User> users = userRepository.findAll();
         List<UserDTO> userDTOs = users.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());

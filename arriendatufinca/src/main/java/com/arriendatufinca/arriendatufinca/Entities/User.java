@@ -10,6 +10,7 @@ import com.arriendatufinca.arriendatufinca.Enums.StatusEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,10 +39,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
+    private String password;
+
     private String name;
     private String lastName;
     private String email;
+
     private StatusEnum status = StatusEnum.ACTIVE;
 
     // As landlord (owned properties)
