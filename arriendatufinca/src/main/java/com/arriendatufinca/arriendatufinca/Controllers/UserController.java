@@ -16,8 +16,8 @@ import com.arriendatufinca.arriendatufinca.Services.UserService;
 
 
 @RestController
-@RequestMapping("/api/users") // Cambiado a plural para consistencia
-@CrossOrigin // Puedes ponerlo aquí una vez para toda la clase
+@RequestMapping("/api/users") 
+@CrossOrigin 
 public class UserController {
 
     @Autowired
