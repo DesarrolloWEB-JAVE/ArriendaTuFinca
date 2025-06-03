@@ -15,10 +15,11 @@ public class PropertyDTO {
     private Long landlordId;
     private String title;
     private String description;
+    private String address;
     private int bathrooms;
     private int bedrooms; 
     private String city;
-    private double pricePerDay;
+    private double price;
     private PropertyState state;
     private String imageUrl = "assets/images/house.jpg";
     private int score = 5;

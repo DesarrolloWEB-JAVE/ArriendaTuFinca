@@ -47,10 +47,10 @@ public class Property {
     private String description;
     private int bathrooms;
     private int bedrooms;
-    private double area;
+    private String address;
     private String country;
     private String city;
-    private double pricePerDay;
+    private double price;
     private List<String> photos;
 
     // Database state
