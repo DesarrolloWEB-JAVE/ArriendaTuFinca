@@ -36,9 +36,9 @@ public class RentalRequestController {
         return ResponseEntity.ok(requests);
     }
 
-    @GetMapping("/landlord/{landlordId}")
-    public ResponseEntity<List<RentalRequestDTO>> getRequestsForLandlord(@PathVariable Long landlordId) {
-        List<RentalRequestDTO> requests = rentalRequestService.getRequestsForLandlord(landlordId);
+    @GetMapping("/landlord/all")
+    public ResponseEntity<List<RentalRequestDTO>> getAllRentalRequests() {
+        List<RentalRequestDTO> requests = rentalRequestService.getAllRentalRequests();
         return ResponseEntity.ok(requests);
     }
 

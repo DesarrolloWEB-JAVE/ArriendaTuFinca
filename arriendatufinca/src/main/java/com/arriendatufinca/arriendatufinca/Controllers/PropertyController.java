@@ -68,8 +68,8 @@ public class PropertyController {
     }
 
     @GetMapping("/landlord/{landlordId}") 
-    public ResponseEntity<List<String>> getPropertyNamesByUserId(@PathVariable Long landlordId) {
-        List<String> propertyNames = adminService.getPropertyNamesByUserId(landlordId);
+    public ResponseEntity<List<PropertyDTO>> getPropertiesByUserId(@PathVariable Long landlordId) {
+        List<PropertyDTO> propertyNames = adminService.getPropertiesByUserId(landlordId);
         return ResponseEntity.ok(propertyNames);
     }
 

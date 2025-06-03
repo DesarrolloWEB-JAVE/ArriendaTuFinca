@@ -55,12 +55,21 @@ public class RentalRequestService {
     }
 
 
-    public List<RentalRequestDTO> getRequestsForLandlord(Long landlordId) {
-        List<RentalRequest> requests = rentalRequestRepository.findByPropertyLandlordId(landlordId);
+    public List<RentalRequestDTO> getAllRentalRequests() {
+        List<RentalRequest> requests = rentalRequestRepository.findAllWithPropertyAndTenant();
+
         return requests.stream()
-                .map(request -> modelMapper.map(request, RentalRequestDTO.class))
+                .map(request -> {
+                    RentalRequestDTO dto = modelMapper.map(request, RentalRequestDTO.class);
+                    dto.setTenantId(request.getTenant() != null ? request.getTenant().getId() : null);
+                    dto.setPropertyId(request.getProperty() != null ? request.getProperty().getId() : null);
+                    dto.setStartDate(request.getStartDate());
+                    dto.setEndDate(request.getEndDate());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
+
 
     public RentalRequestDTO approveRentalRequest(Long rentalRequestId) {
         RentalRequest rentalRequest = rentalRequestRepository.findById(rentalRequestId)

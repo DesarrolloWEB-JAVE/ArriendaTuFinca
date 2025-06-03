@@ -2,7 +2,6 @@ package com.arriendatufinca.arriendatufinca.Repositories;
 
 import java.util.List;
 
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -20,10 +19,8 @@ public interface RentalRequestRepository extends JpaRepository<RentalRequest, Lo
     List<RentalRequest> findByTenantWithPropertyAndTenant(@Param("tenant") User tenant);
 
 
-    static Specification<RentalRequest> belongsToTenant(User tenant) {
-        return (root, query, cb) -> 
-            cb.equal(root.get("tenant").get("id"), tenant.getId());
-    }
+   @Query("SELECT r FROM RentalRequest r LEFT JOIN FETCH r.tenant LEFT JOIN FETCH r.property")
+    List<RentalRequest> findAllWithPropertyAndTenant();
     
     boolean existsByTenantAndProperty(User tenant, Property property);
 

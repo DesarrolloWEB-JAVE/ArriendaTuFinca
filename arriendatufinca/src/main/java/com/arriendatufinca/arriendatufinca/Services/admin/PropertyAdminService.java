@@ -69,21 +69,26 @@ public class PropertyAdminService {
         return modelMapper.map(updatedProperty, PropertyDTO.class);
     }
     
-    public List<String> getPropertyNamesByUserId(Long landlordId) {
+    public List<PropertyDTO> getPropertiesByUserId(Long landlordId) {
         if (landlordId == null) {
             throw new IllegalArgumentException("El ID del propietario no puede ser nulo");
         }
-    
+
         User landlord = userRepository.findById(landlordId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-    
+
         List<Property> properties = Optional.ofNullable(propertyRepository.findByLandlord(landlord))
                 .orElse(Collections.emptyList());
-    
+
         return properties.stream()
-                .map(Property::getTitle)
+                .map(property -> {
+                    PropertyDTO dto = modelMapper.map(property, PropertyDTO.class);
+                    dto.setLandlordId(landlordId); // Aseguramos que se incluya explícitamente
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
+
     
     public PropertyDTO deactivateProperty(Long id) {
         Property property = propertyRepository.findById(id)
