@@ -53,4 +53,10 @@ public class RentalRequestController {
         RentalRequestDTO rejectedRequest = rentalRequestService.rejectRentalRequest(rentalRequestId);
         return ResponseEntity.ok(rejectedRequest);
     }
+
+    @PutMapping("/{rentalRequestId}/cancel")
+    public ResponseEntity<RentalRequestDTO> cancelRentalRequest(@PathVariable Long rentalRequestId) {
+        RentalRequestDTO cancelRequest = rentalRequestService.cancelRentalRequest(rentalRequestId);
+        return ResponseEntity.ok(cancelRequest);
+    }
 }

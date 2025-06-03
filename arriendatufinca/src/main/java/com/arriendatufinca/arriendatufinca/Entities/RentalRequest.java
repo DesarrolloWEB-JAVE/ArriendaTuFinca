@@ -1,6 +1,6 @@
 package com.arriendatufinca.arriendatufinca.Entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.SQLDelete;
@@ -23,8 +23,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-   
 @Entity
 @Data
 @NoArgsConstructor
@@ -45,8 +43,8 @@ public class RentalRequest {
     @JoinColumn(name = "property_id", nullable = false)
     private Property property;
 
-    private Date startDate;
-    private Date endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
     private RequestState state = RequestState.PENDING;
@@ -54,6 +52,4 @@ public class RentalRequest {
     private StatusEnum status = StatusEnum.ACTIVE;
 
     private LocalDateTime createdAt = LocalDateTime.now();
-
-    
 }

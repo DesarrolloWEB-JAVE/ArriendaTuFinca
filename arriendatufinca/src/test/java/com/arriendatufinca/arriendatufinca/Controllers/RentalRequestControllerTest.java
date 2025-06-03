@@ -42,8 +42,14 @@ public class RentalRequestControllerTest {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(rentalRequestController).build();
 
-        rentalRequestDTO = new RentalRequestDTO( 
-            1L, 1L, 2L, RequestState.PENDING, StatusEnum.ACTIVE
+        rentalRequestDTO = new RentalRequestDTO(
+            1L,
+            1L,
+            2L,
+            "2023-12-01", // startDate
+            "2023-12-05", // endDate
+            RequestState.PENDING,
+            StatusEnum.ACTIVE
         );
     }
 
@@ -56,7 +62,9 @@ public class RentalRequestControllerTest {
                 .content(new ObjectMapper().writeValueAsString(rentalRequestDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.state").value("PENDING"));
+                .andExpect(jsonPath("$.state").value("PENDING"))
+                .andExpect(jsonPath("$.startDate").value("2023-12-01"))
+                .andExpect(jsonPath("$.endDate").value("2023-12-05"));
 
         verify(rentalRequestService).createRentalRequest(any(RentalRequestDTO.class));
     }
@@ -111,4 +119,3 @@ public class RentalRequestControllerTest {
         verify(rentalRequestService).rejectRentalRequest(1L);
     }
 }
-

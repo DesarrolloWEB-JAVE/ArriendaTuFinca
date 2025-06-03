@@ -39,12 +39,21 @@ public class RentalRequestService {
 
     public List<RentalRequestDTO> getRequestsForCurrentTenant(Long tenantId) {
         User tenant = userRepository.findById(tenantId)
-        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        List<RentalRequest> requests = rentalRequestRepository.findAllForTenant(tenant);
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        List<RentalRequest> requests = rentalRequestRepository.findByTenantWithPropertyAndTenant(tenant);
+
         return requests.stream()
-                .map(request -> modelMapper.map(request, RentalRequestDTO.class))
+                .map(request -> {
+                    RentalRequestDTO dto = modelMapper.map(request, RentalRequestDTO.class);
+                    dto.setTenantId(request.getTenant() != null ? request.getTenant().getId() : null);
+                    dto.setPropertyId(request.getProperty() != null ? request.getProperty().getId() : null);
+                    dto.setStartDate(request.getStartDate());
+                    dto.setEndDate(request.getEndDate());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
+
 
     public List<RentalRequestDTO> getRequestsForLandlord(Long landlordId) {
         List<RentalRequest> requests = rentalRequestRepository.findByPropertyLandlordId(landlordId);
@@ -68,6 +77,16 @@ public class RentalRequestService {
                 .orElseThrow(() -> new RuntimeException("Solicitud de arriendo no encontrada"));
     
         rentalRequest.setState(RequestState.REJECTED);
+        RentalRequest updatedRequest = rentalRequestRepository.save(rentalRequest);
+    
+        return modelMapper.map(updatedRequest, RentalRequestDTO.class);
+    }
+
+        public RentalRequestDTO cancelRentalRequest(Long rentalRequestId) {
+        RentalRequest rentalRequest = rentalRequestRepository.findById(rentalRequestId)
+                .orElseThrow(() -> new RuntimeException("Solicitud de arriendo no encontrada"));
+    
+        rentalRequest.setStatus(StatusEnum.DELETED);
         RentalRequest updatedRequest = rentalRequestRepository.save(rentalRequest);
     
         return modelMapper.map(updatedRequest, RentalRequestDTO.class);
