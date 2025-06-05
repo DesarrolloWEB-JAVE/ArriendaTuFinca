@@ -57,9 +57,41 @@ public class UserService {
         userDTO.setId(user.getId());
         return userDTO;
     }
+
     public void createUser(UserDTO userDTO) {
         User user = modelMapper.map(userDTO, User.class);
         user.setStatus(StatusEnum.ACTIVE);
         userRepository.save(user);
     }
+
+   public UserDTO updateUser(Long userId, UserDTO updatedData) {
+
+    User existingUser = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException(
+                    "User not found with id: " + userId));
+
+    /* ─── Campos “simples” ─────────────────────────────────────────── */
+    if (updatedData.getName() != null && !updatedData.getName().isBlank()) {
+        existingUser.setName(updatedData.getName());
+    }
+
+    if (updatedData.getLastName() != null && !updatedData.getLastName().isBlank()) {
+        existingUser.setLastName(updatedData.getLastName());
+    }
+
+    if (updatedData.getEmail() != null && !updatedData.getEmail().isBlank()) {
+        existingUser.setEmail(updatedData.getEmail());
+    }
+
+
+    if (updatedData.getPassword() != null && !updatedData.getPassword().isBlank()) {
+        existingUser.setPassword(updatedData.getPassword()); 
+    }
+
+    /* ─── Persistimos y devolvemos el DTO actualizado ──────────────── */
+    User saved = userRepository.save(existingUser);
+    return modelMapper.map(saved, UserDTO.class);
+}
+
+
 }

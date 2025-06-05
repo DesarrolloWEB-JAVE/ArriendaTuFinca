@@ -1,7 +1,5 @@
 package com.arriendatufinca.arriendatufinca.Entities;
 
-import java.time.LocalDateTime;
-
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -32,17 +30,12 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  // Cambiado de RatingId a id por convención
     
-    private Integer ratingValue;
+    private Integer rating;
     private String comment;
-    private LocalDateTime reviewDate = LocalDateTime.now();
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "property_id", nullable = false)
     private Property property;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
     private StatusEnum status = StatusEnum.ACTIVE;
 }

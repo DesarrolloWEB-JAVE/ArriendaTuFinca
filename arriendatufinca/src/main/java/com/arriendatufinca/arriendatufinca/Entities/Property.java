@@ -51,7 +51,7 @@ public class Property {
     private String country;
     private String city;
     private double price;
-    private List<String> photos;
+    private String photos;
 
     // Database state
     private StatusEnum status = StatusEnum.ACTIVE;

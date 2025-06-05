@@ -21,7 +21,6 @@ public class PropertyDTO {
     private String city;
     private double price;
     private PropertyState state;
-    private String imageUrl = "assets/images/house.jpg";
-    private int score = 5;
-    private String country = "Colombia";
+    private String photos;
+    private String country;
 }
