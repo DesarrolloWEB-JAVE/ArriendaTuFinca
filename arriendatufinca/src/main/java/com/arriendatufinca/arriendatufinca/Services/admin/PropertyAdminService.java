@@ -43,6 +43,7 @@ public class PropertyAdminService {
             property.setLandlord(landlord);
             property.setStatus(StatusEnum.ACTIVE); // Estado por defecto 
             property.setPropertyState(PropertyState.AVAILABLE); // Estado por defecto 
+            property.setPhotos("assets/images/house.jpg");
     
             // Guardar en la base de datos
             System.out.println("Guardando propiedad...");
