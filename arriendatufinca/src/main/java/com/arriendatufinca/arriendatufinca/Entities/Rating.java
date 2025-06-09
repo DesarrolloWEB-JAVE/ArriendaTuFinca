@@ -1,34 +1,41 @@
 package com.arriendatufinca.arriendatufinca.Entities;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+
+import com.arriendatufinca.arriendatufinca.Enums.StatusEnum;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
 
-import com.arriendatufinca.arriendatufinca.Enums.RatingType;
-
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE rating SET status = 'INACTIVE' WHERE id=?")
+@SQLRestriction("status = 0")
+@SQLDelete(sql = "UPDATE rating SET status = 1 WHERE id=?") // Borrado lógico
 @Table(name = "rating")
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "request_id")
-    private RentalRequest request;
-
-    private int score;
+    private Long id;  // Cambiado de RatingId a id por convención
+    
+    private Integer rating;
     private String comment;
-    private LocalDateTime date;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "property_id", nullable = false)
+    private Property property;
 
-    @Enumerated(EnumType.STRING)
-    private RatingType type;
+    private StatusEnum status = StatusEnum.ACTIVE;
 }

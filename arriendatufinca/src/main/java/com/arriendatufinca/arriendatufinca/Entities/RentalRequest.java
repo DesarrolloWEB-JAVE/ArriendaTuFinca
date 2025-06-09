@@ -1,22 +1,34 @@
 package com.arriendatufinca.arriendatufinca.Entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
-import com.arriendatufinca.arriendatufinca.Enums.RequestStatus;
+import com.arriendatufinca.arriendatufinca.Enums.RequestState;
+import com.arriendatufinca.arriendatufinca.Enums.StatusEnum;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-   
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE rental_requests SET status = 'DELETED' WHERE id = ?")
+@SQLRestriction("status = 0")
+@SQLDelete(sql = "UPDATE rental_requests SET status = 1 WHERE id = ?")
 @Table(name = "rental_requests")
 public class RentalRequest {
     @Id
@@ -31,8 +43,13 @@ public class RentalRequest {
     @JoinColumn(name = "property_id", nullable = false)
     private Property property;
 
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
     @Enumerated(EnumType.STRING)
-    private RequestStatus status = RequestStatus.PENDING;
+    private RequestState state = RequestState.PENDING;
+    
+    private StatusEnum status = StatusEnum.ACTIVE;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 }
